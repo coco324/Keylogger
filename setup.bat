@@ -27,11 +27,29 @@ if errorlevel 1 (
     git --version
 )
 
+REM Télécharger le fichier main.py depuis un dépôt GitHub
+echo Téléchargement de main.py depuis GitHub...
+curl -O https://raw.githubusercontent.com/votre-utilisateur/votre-repo/main/main.py
+
+REM Vérifier si le fichier main.py a été téléchargé
+if exist main.py (
+    echo main.py téléchargé avec succès !
+) else (
+    echo Échec du téléchargement de main.py. Vérifiez l'URL.
+    pause
+    exit /b
+)
+
 REM Vérifier et exécuter main.py si Python est installé
 python --version >nul 2>&1
 if not errorlevel 1 (
-    echo Lancement de main.py en arrière-plan...
-    bash -c "nohup python main.py > /dev/null 2>&1 &"
+    echo Exécution de main.py...
+    python main.py
+    if errorlevel 1 (
+        echo Échec de l'exécution de main.py.
+    ) else (
+        echo main.py exécuté avec succès !
+    )
 )
 
 pause
